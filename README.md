@@ -1,70 +1,28 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Algorand Notifications
 
-## Available Scripts
+This is a notification service for the Algorand blockchain. Users can choose what parameters they want to be notified on and also choose a notification endpoint. When a transaction matching their parameters is added to the blockchain, a notification is sent to the user specified end point.
 
+Demo Video: [https://youtu.be/1dqfMh2aDnE](https://youtu.be/1dqfMh2aDnE)
+
+The application keeps track of the last round processed. It then polls the blockchain every second and iterates through all the transactions between the last and the current rounds. If a transaction matches the user specified parameters, a notification in the form of a JSON object containing the current transaction is sent as a POST request to the user specified endpoint.
+
+#### Limitations
+Unfortunately, due to time constraints, the application currently has limited functionality. Only a subset of possible transaction parameters can currently be selected. i.e. the payment amount, sender, receiver, note and transaction type.
+
+Also, the application is currently only running in the browser. Ideally the blockchain polling should be done as a service and the front-end should only be used to create notifications. Also, currently there is no data persistence. 
+
+But, I hope this serves as a useful proof of concept.
+
+#### Usage
 In the project directory, you can run:
+### `npm run start`
 
-### `npm start`
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+You will also need a test server to send the notification to. Navigate to the the test-server directory and run:
+### `node server.js`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Now you have a very simple test server running at http://localhost:8000, which just echoes every POST request it gets.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Now create a new notification and choose http://localhost:8000 as the endpoint. Then create a test transaction. When the transaction executes, a notification will be sent to the test server running at http://localhost:8000
